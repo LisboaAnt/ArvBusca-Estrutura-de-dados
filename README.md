@@ -15,7 +15,7 @@ Para acessar o repositório, visite: [https://github.com/lisboaGOD/ArvBusca-Estr
 gcc --version
 
 # Clone o repositório para sua máquina local:
-git clone https://github.com/lisboaGOD/ArvBusca-Estrutura-de-dados.git
+git clone https://github.com/LisboaAnt/ArvBusca-Estrutura-de-dados.git
 
 # Navegue até o diretório do projeto:
 cd ArvBusca-Estrutura-de-dados
