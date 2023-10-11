@@ -25,7 +25,7 @@ gcc seu_arquivo.c -o executável
 
 # Execute o programa compilado:
 ./executável
-
+```
 ## 💛 Contact
 
 antoniol.carvalho49@gmail.com
