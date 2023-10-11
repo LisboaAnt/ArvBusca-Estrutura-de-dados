@@ -2,7 +2,7 @@
 - Repositório destinado ao armazenamento de diversas estruturas de dados.
 Este projeto foi desenvolvido como parte das disciplinas de Estrutura de Dados e Estrutura de Dados Avançada da Universidade Federal do Ceará (UFC).
 
-Para acessar o repositório, visite: [https://github.com/lisboaGOD/ArvBusca-Estrutura-de-dados.git](https://github.com/lisboaGOD/ArvBusca-Estrutura-de-dados.git).
+Para acessar o repositório, visite: https://github.com/LisboaAnt/Data-Structures.git.
 
 ## 🛠 Tecnologias
 
@@ -15,7 +15,7 @@ Para acessar o repositório, visite: [https://github.com/lisboaGOD/ArvBusca-Estr
 gcc --version
 
 # Clone o repositório para sua máquina local:
-git clone https://github.com/LisboaAnt/ArvBusca-Estrutura-de-dados.git
+git clone https://github.com/LisboaAnt/Data-Structures.git
 
 # Navegue até o diretório do projeto:
 cd ArvBusca-Estrutura-de-dados
