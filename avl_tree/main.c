@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <locale.h>
-#include <stdbool.h>
 
 typedef struct no{
     int key;
@@ -17,7 +15,7 @@ typedef struct no{
 
 
 
-//Funcoes principais: caso1(add), caso2(add), inserir }|{  caso1R(remover),caso2R(remover),balancear, trocarNos e remover
+//Funcoes principais:  {  caso1(add), caso2(add), inserir }|{  caso1R(remover),caso2R(remover),balancear, trocarNos e remover  }
 
 //  rotação simples e duplas para a esquerda (para adicionar)
 void Caso1(No **raiz, int *h) {
@@ -477,12 +475,12 @@ int main() {
 
     for (int i = 0; i < 1000; i++) { //1000 arvore avl
 
-        printf("\n Arvore numero: {%d}\n", i+1);
+        printf("\n \033[1;31m Arvore numero: {%d}\n", i+1);
 
         int h, Nnos = 0;
 
 
-        criarlista(listaNRand, 100000); // Gere uma única vez os números aleatórios para todas as AVLs
+        criarlista(listaNRand, 100000); // Gere uma lista de números aleatórios de 0 a 100 000
 
         No *raiz = NULL;
 
@@ -492,7 +490,7 @@ int main() {
 
 
 
-        printf("Arvore com : %d nos\n", Nnos);
+        printf("\033[0mArvore com : %d nos\n", Nnos);
 
         Nnos = 0; //Zera
 
