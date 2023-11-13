@@ -21,7 +21,7 @@ git clone https://github.com/LisboaAnt/Data-Structures.git
 cd ArvBusca-Estrutura-de-dados
 
 # Compile o código-fonte usando o GCC:
-gcc seu_arquivo.c -o executável
+gcc -o executável arquivo.c
 
 # Execute o programa compilado:
 ./executável
