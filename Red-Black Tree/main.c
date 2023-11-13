@@ -280,6 +280,7 @@ int main()
         novoNo->chave = listaNRand[i];
         RBInsert(&minhaArvore, novoNo);
 
+
         /* PRA MOSTRAR OS VALORES INSERIDOS!
         printf("Estrutura da Arvore apos Insercao de %d:\n", listaNRand[i]);
         inorderTraversal(minhaArvore.raiz, minhaArvore.nil);
@@ -287,18 +288,16 @@ int main()
         */
     }
 
-    if (isRedBlackTree(&minhaArvore))
-    {
-        printf("A arvore e uma arvore rubro-negra.\n");
-    }
-    else
-    {
-        printf("A arvore NAO e uma arvore rubro-negra.\n");
-    }
+
+    //E ou não uma RBT?
+    if (isRedBlackTree(&minhaArvore)){printf("\033[1;32m A arvore E uma arvore rubro-negra.\033[0m\n");}
+    else{printf("\033[1;31m A arvore NAO E uma arvore rubro-negra.\033[0m\n");}
+
 
     // Liberar a memória alocada para a árvore
     freeTree(minhaArvore.raiz, minhaArvore.nil);
     free(minhaArvore.nil);
+
 
     return 0;
 }
