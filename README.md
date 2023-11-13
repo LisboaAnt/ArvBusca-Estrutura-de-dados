@@ -1,4 +1,4 @@
-# ESTRUTURA DE DADOS (Árvore Binária de Busca, Árvore AVL)
+# ESTRUTURA DE DADOS (Árvore Binária de Busca, Árvore AVL...)
 - Repositório destinado ao armazenamento de diversas estruturas de dados.
 Este projeto foi desenvolvido como parte das disciplinas de Estrutura de Dados e Estrutura de Dados Avançada da Universidade Federal do Ceará (UFC).
 
