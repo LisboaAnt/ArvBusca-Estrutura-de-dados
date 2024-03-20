@@ -173,7 +173,159 @@ void RBInsert(struct Estrutura *T, struct No *z)
     RBInsertFixup(T, z);
 }
 
-///  FUNÇÕES AUX: { freeTree / inorderTraversal / isRedBlackTreeHelper / isRedBlackTree / criarlista }
+// REMOÇÃO : RB-TRANSPLANT RB-DELETE-FIXUP RB-DELETE
+
+struct No *acharNo(struct Estrutura *T, int chave) {
+    struct No *aux = T->raiz;
+
+    while (aux != T->nil) {
+        if (chave < aux->chave) {
+            aux = aux->esquerda;
+        } else if (chave > aux->chave) {
+            aux = aux->direita;
+        } else {
+            return aux;  // Encontrou o nó com a chave desejada
+        }
+    }
+
+    return T->nil;  // Não encontrou o nó com a chave desejada
+}
+
+struct No *sucessor(struct Estrutura *T, int chave) {
+    struct No *x = acharNo(T, chave);
+
+    if (x == T->nil) {
+        return T->nil;  // O nó com a chave desejada não foi encontrado
+    }
+
+    struct No *aux = x->direita;
+
+    while (aux != T->nil) {
+        aux = aux->esquerda;
+    }
+
+    return aux;
+}
+
+
+void moverPai(struct Estrutura *T, struct No **u, struct No **v) {
+    if ((*u)->pai == T->nil) {
+        T->raiz = *v;
+
+    } else {
+        if ((*u)->chave == (*u)->pai->esquerda->chave) {
+
+            (*u)->pai->esquerda = *v;
+
+        } else {
+
+            (*u)->pai->direita = *v;
+
+        }
+    }
+    (*v)->pai = (*u)->pai;
+}
+
+void RbDeleteFixUp(struct Estrutura *T, struct No *x){
+    struct No *g;
+    while (x != T->raiz || x->color == 0){
+        if (x == x->pai->esquerda){
+            g = x->pai->direita;
+
+            if (g->color == 1){
+                g->color = 0;
+                x->pai->color = 1;
+                leftRotate(T, x->pai);
+                g = x->pai->direita;}
+
+            if (g->esquerda->color == 0 || g->direita->color == 0){
+                g->color = 1;
+                x = x->pai;}
+
+            else if (g->direita->color == 0){
+                g->esquerda->color = 0;
+                g->color = 1;
+                rightRotate(T, g);
+                g = x->pai->direita;
+                g->color = x->pai->color;
+                x->pai->color = 0;}
+
+            g->direita->color = 0;
+            leftRotate(T, x->pai);
+            x = T->raiz;
+
+        } else {
+
+            g = x->pai->esquerda;
+            if (g->color == 1) {
+                g->color = 0;
+                x->pai->color = 1;
+                rightRotate(T, x->pai);
+                g = x->pai->esquerda;
+            }
+
+            if (g->direita->color == 0 || g->esquerda->color == 0) {
+                g->color = 1;
+                x = x->pai;
+            } else if (g->esquerda->color == 0) {
+                g->direita->color = 0;
+                g->color = 1;
+                leftRotate(T, g);
+                g = x->pai->esquerda;
+                g->color = x->pai->color;
+                x->pai->color = 0;
+            }
+
+            g->esquerda->color = 0;
+            rightRotate(T, x->pai);
+            x = T->raiz;
+        }
+    }
+    x->color = 0;
+}
+
+void RBDelete(struct Estrutura *T, struct No *z){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      return;
+
+    struct No *x;
+    struct No *y = z;
+    int yCorOriginal = y->color;
+
+    if (z->esquerda == T->nil){
+        x = z->direita;
+        moverPai(T,&z,&z->direita);
+  
+    }else if(z->direita == T->nil){
+        x = z->esquerda;
+        moverPai(T,&z,&z->esquerda);
+
+    }else{y = sucessor(T,z->chave);
+            yCorOriginal = y->color;
+            x = y->direita;
+            if(y->pai == z){
+                x->pai = y;
+ 
+                }
+            else{
+                moverPai(T,&y,&y->direita);              
+                y->direita = z->direita;
+                y->direita->pai = y;
+            
+            }
+
+            moverPai(T,&z,&y);
+            y->esquerda = z->esquerda;
+            y->esquerda->pai = y;
+            y->color = z->color;
+        }
+
+    if(yCorOriginal == 0 ){
+        RbDeleteFixUp(T,x);
+    }
+}
+
+
+
+///  FUNÇÕES AUX: { freeTree / isRedBlackTreeHelper / isRedBlackTree / criarlista }
 
 void freeTree(struct No *no, struct No *nil)
 {
@@ -185,15 +337,6 @@ void freeTree(struct No *no, struct No *nil)
     }
 }
 
-void inorderTraversal(struct No *no, struct No *nil)
-{
-    if (no != nil)
-    {
-        inorderTraversal(no->esquerda, nil);
-        printf("%d ", no->chave);
-        inorderTraversal(no->direita, nil);
-    }
-}
 
 int isRedBlackTreeHelper(struct No *no, struct No *nil, int *blackHeight)
 {
@@ -259,45 +402,57 @@ void criarlista(int *array, int amount)
     free(valoresUnicos);
 }
 
-
 /// MAIN:
 
 int main()
 {
+
+    for (int i =0; i<100;++i){
+        printf("%i",i);
+
+
+
     struct Estrutura minhaArvore;
     minhaArvore.nil = malloc(sizeof(struct No));
     minhaArvore.nil->color = 0; // Preto
     minhaArvore.nil->esquerda = minhaArvore.nil->direita = minhaArvore.nil->pai = NULL;
     minhaArvore.raiz = minhaArvore.nil;
 
-    int *listaNRand = malloc(sizeof(int) * 100000); // Guarda espaco para a list
+    int *listaNRand = malloc(sizeof(int) * 1000); // Guarda espaco para a list
 
-    criarlista(listaNRand, 100000);
+    criarlista(listaNRand, 100);
 
-    for (int i = 0; i < 10000; ++i)
-    {
+
+    for (int i = 0; i < 100; ++i){
         struct No *novoNo = malloc(sizeof(struct No));
         novoNo->chave = listaNRand[i];
         RBInsert(&minhaArvore, novoNo);
 
 
-        /* PRA MOSTRAR OS VALORES INSERIDOS!
-        printf("Estrutura da Arvore apos Insercao de %d:\n", listaNRand[i]);
-        inorderTraversal(minhaArvore.raiz, minhaArvore.nil);
-        printf("\n--------------------------------\n");
-        */
     }
+        // E ou não uma RBT?
+    if (isRedBlackTree(&minhaArvore)){
+        printf("\033[1;32m A arvore E uma arvore rubro-negra.\033[0m\n");}
+    else{
+        printf("\033[1;31m A arvore NAO E uma arvore rubro-negra.\033[0m\n");}
 
 
-    //E ou não uma RBT?
-    if (isRedBlackTree(&minhaArvore)){printf("\033[1;32m A arvore E uma arvore rubro-negra.\033[0m\n");}
-    else{printf("\033[1;31m A arvore NAO E uma arvore rubro-negra.\033[0m\n");}
+    for (int i = 0; i < 10; ++i){
+        
+        struct No *novoNo = malloc(sizeof(struct No));
+        novoNo = acharNo(&minhaArvore,listaNRand[i]);
 
+       RBDelete(&minhaArvore, novoNo);
+    }    
+
+    if (isRedBlackTree(&minhaArvore)){
+        printf("\033[1;32m A arvore E uma arvore rubro-negra.\033[0m\n\n");}
+    else{
+        printf("\033[1;31m A arvore NAO E uma arvore rubro-negra.\033[0m\n\n");}
 
     // Liberar a memória alocada para a árvore
     freeTree(minhaArvore.raiz, minhaArvore.nil);
     free(minhaArvore.nil);
-
-
+    }
     return 0;
 }
